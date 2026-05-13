@@ -1,0 +1,23 @@
+{
+  "name": "titl",
+  "private": true,
+  "description": "Thorpebury in the Limes — community web app",
+  "scripts": {
+    "dev": "concurrently -n client,server -c blue,green \"npm run dev -w client\" \"npm run dev -w server\"",
+    "build": "npm run build -w client && npm run build -w server",
+    "start": "npm run start -w server",
+    "client": "npm run dev -w client",
+    "server": "npm run dev -w server"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "devDependencies": {
+    "@babel/types": "^7.29.0",
+    "caniuse-lite": "^1.0.30001732",
+    "concurrently": "^9.1.0",
+    "fdir": "^6.5.0",
+    "postcss": "^8.4.49"
+  }
+}

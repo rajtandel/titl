@@ -1,46 +1,67 @@
-usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
-           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]
-           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]
-           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]
-           <command> [<args>]
+# Thorpebury in the Limes (TiTL)
 
-These are common Git commands used in various situations:
+Community web app for **Thorpebury in the Limes** — TiTL. React + TypeScript + Tailwind (Vite) frontend and Express backend in one repository. **MongoDB** (Mongoose) stores user accounts; **register and log in** use the API with bcrypt password hashes and an **HTTP-only cookie** holding a signed JWT.
 
-start a working area (see also: git help tutorial)
-   clone      Clone a repository into a new directory
-   init       Create an empty Git repository or reinitialize an existing one
+## Requirements
 
-work on the current change (see also: git help everyday)
-   add        Add file contents to the index
-   mv         Move or rename a file, a directory, or a symlink
-   restore    Restore working tree files
-   rm         Remove files from the working tree and from the index
+- Node.js 20+ and npm (or pnpm/yarn with equivalent commands)
+- MongoDB — [Atlas](https://www.mongodb.com/cloud/atlas) (recommended) or a local `mongod` instance
+- [mongosh](https://www.mongodb.com/docs/mongodb-shell/) (optional) — MongoDB Shell to inspect data from the terminal
 
-examine the history and state (see also: git help revisions)
-   bisect     Use binary search to find the commit that introduced a bug
-   diff       Show changes between commits, commit and working tree, etc
-   grep       Print lines matching a pattern
-   log        Show commit logs
-   show       Show various types of objects
-   status     Show the working tree status
+## Configuration
 
-grow, mark and tweak your common history
-   backfill   Download missing objects in a partial clone
-   branch     List, create, or delete branches
-   commit     Record changes to the repository
-   merge      Join two or more development histories together
-   rebase     Reapply commits on top of another base tip
-   reset      Reset current HEAD to the specified state
-   switch     Switch branches
-   tag        Create, list, delete or verify a tag object signed with GPG
+1. Copy `.env.example` to `.env` in the **repository root** (next to the root `package.json`).
+2. Set `MONGODB_URI`, for example:
+   - Atlas: `mongodb+srv://<user>:<password>@<cluster>/<dbname>?retryWrites=true&w=majority`
+   - Local: `mongodb://127.0.0.1:27017/titl`
+3. Set `JWT_SECRET` to a long random string (at least **16 characters**), for example:
+   `openssl rand -base64 32`
 
-collaborate (see also: git help workflows)
-   fetch      Download objects and refs from another repository
-   pull       Fetch from and integrate with another repository or a local branch
-   push       Update remote refs along with associated objects
+If `MONGODB_URI` is empty or missing, the server still runs; `GET /api/health` reports `mongo.state` as `not_configured`. Auth endpoints return **503** until MongoDB is connected.
 
-'git help -a' and 'git help -g' list available subcommands and some
-concept guides. See 'git help <command>' or 'git help <concept>'
-to read about a specific subcommand or concept.
-See 'git help git' for an overview of the system.
+## Scripts
+
+From the repository root:
+
+| Command | Description |
+|--------|-------------|
+| `npm install` | Install root and workspace packages |
+| `npm run dev` | Vite dev server (port 5173) + Express API (port 3001) |
+| `npm run build` | Production build of client and server |
+| `npm start` | Run Express; serves `client/dist` and `/api/*` |
+
+During `npm run dev`, the Vite dev server proxies `/api/*` to Express so the SPA and API share one origin for cookies.
+
+## Auth API
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `GET` | `/api/auth/me` | Current user from cookie, or **401** |
+| `POST` | `/api/auth/register` | JSON `{ name, email, password }` — creates user, sets cookie |
+| `POST` | `/api/auth/login` | JSON `{ email, password }` — sets cookie |
+| `POST` | `/api/auth/logout` | Clears cookie |
+
+## MongoDB Shell (`mongosh`)
+
+Use the same connection string as `MONGODB_URI` (quote it in the shell if it contains `&`):
+
+```bash
+mongosh "$MONGODB_URI"
+```
+
+Then inspect registered users (passwords are hashed; only metadata is visible):
+
+```javascript
+use titl   // or your database name from the URI path
+db.users.find({}, { email: 1, name: 1, createdAt: 1 }).pretty()
+```
+
+## Project layout
+
+- `client/` — Vite React app (pages: home, developers, contacts, events, login, register)
+- `server/` — Express, Mongoose (`server/src/db/mongo.ts`), auth routes (`server/src/routes/auth.ts`)
+
+## Notes
+
+- Developer copy is summarised from public sites (Davidsons, William Davis) plus a link for David Wilson Homes. Always confirm details on the official sales sites.
+- Contacts and events use placeholder data so you can replace content with community-approved listings.
