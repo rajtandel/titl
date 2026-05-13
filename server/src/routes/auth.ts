@@ -14,15 +14,13 @@ function mongoConnected(): boolean {
 
 function authUnavailable(res: Response) {
   res.status(503).json({
-    error:
-      "Database is not available. Set MONGODB_URI in .env and ensure MongoDB is running, then restart the server.",
+    error: "Sign-in is temporarily unavailable. Please try again later.",
   });
 }
 
 function missingJwtSecret(res: Response) {
   res.status(500).json({
-    error:
-      "Server is not configured for sign-in. Set JWT_SECRET in .env (at least 16 characters).",
+    error: "Sign-in is not available right now. Please try again later.",
   });
 }
 

@@ -54,11 +54,6 @@ export function Register() {
   return (
     <div className="mx-auto max-w-md">
       <h1 className="font-serif text-3xl font-semibold text-titl-forest sm:text-4xl">Register</h1>
-      <p className="mt-3 text-lg text-titl-bark">
-        Create an account stored in MongoDB. There is no email confirmation yet — that can be
-        added later. You must run the API with <code className="rounded bg-titl-sand px-1">MONGODB_URI</code> and{" "}
-        <code className="rounded bg-titl-sand px-1">JWT_SECRET</code> set in <code className="rounded bg-titl-sand px-1">.env</code>.
-      </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6 rounded-2xl border border-titl-sand bg-white p-6 shadow-sm">
         {error ? (

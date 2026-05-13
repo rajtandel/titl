@@ -47,10 +47,9 @@ export function Home() {
           <Link to="/register" className="font-semibold text-titl-moss underline-offset-4 hover:underline">
             Register
           </Link>{" "}
-          for an account stored in MongoDB (run the server with a database and{" "}
-          <code className="rounded bg-titl-sand/80 px-1 text-base">JWT_SECRET</code> set).{" "}
+          for an account, or{" "}
           <Link to="/login" className="font-semibold text-titl-moss underline-offset-4 hover:underline">
-            Log in
+            log in
           </Link>{" "}
           if you have already registered on this phone or computer.
         </p>

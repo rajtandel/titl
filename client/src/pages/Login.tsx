@@ -49,10 +49,6 @@ export function Login() {
   return (
     <div className="mx-auto max-w-md">
       <h1 className="font-serif text-3xl font-semibold text-titl-forest sm:text-4xl">Log in</h1>
-      <p className="mt-3 text-lg text-titl-bark">
-        Your account is stored in the community MongoDB database. The server sets a secure
-        HTTP-only cookie in this browser after a successful sign-in.
-      </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6 rounded-2xl border border-titl-sand bg-white p-6 shadow-sm">
         {error ? (
