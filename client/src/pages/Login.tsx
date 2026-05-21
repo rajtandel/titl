@@ -12,7 +12,7 @@ export function Login() {
 
   if (!ready) {
     return (
-      <div className="mx-auto max-w-md rounded-2xl border border-titl-sand bg-white p-8 text-center text-lg text-titl-bark shadow-sm">
+      <div className="mx-auto max-w-md card-padded text-center text-titl-muted">
         Checking your session…
       </div>
     );
@@ -20,13 +20,13 @@ export function Login() {
 
   if (user) {
     return (
-      <div className="mx-auto max-w-md space-y-6 rounded-2xl border border-titl-sand bg-white p-8 shadow-sm">
-        <h1 className="font-serif text-3xl font-semibold text-titl-forest">You are signed in</h1>
-        <p className="text-lg text-titl-bark">
-          Hello, <strong>{user.name}</strong>. Use <strong>Log out</strong> in the menu when
-          you are finished on this device.
+      <div className="mx-auto max-w-md space-y-6 card-padded text-center">
+        <h1 className="page-title !text-3xl">You are signed in.</h1>
+        <p className="text-body-lg text-titl-muted">
+          Hello, <strong className="text-titl-text">{user.name}</strong>. Use{" "}
+          <strong className="text-titl-text">Log out</strong> in the menu when you are finished.
         </p>
-        <Link to="/" className="inline-flex min-h-[48px] items-center text-lg font-semibold text-titl-moss underline">
+        <Link to="/" className="link-accent inline-block">
           Back to home
         </Link>
       </div>
@@ -48,17 +48,17 @@ export function Login() {
 
   return (
     <div className="mx-auto max-w-md">
-      <h1 className="font-serif text-3xl font-semibold text-titl-forest sm:text-4xl">Log in</h1>
+      <h1 className="page-title">Log in.</h1>
 
-      <form onSubmit={handleSubmit} className="mt-8 space-y-6 rounded-2xl border border-titl-sand bg-white p-6 shadow-sm">
+      <form onSubmit={handleSubmit} className="mt-10 space-y-6 card-padded">
         {error ? (
-          <p className="rounded-lg bg-red-50 px-4 py-3 text-base text-red-900" role="alert">
+          <p className="alert-error" role="alert">
             {error}
           </p>
         ) : null}
 
         <div>
-          <label htmlFor="login-email" className="block text-lg font-semibold text-titl-forest">
+          <label htmlFor="login-email" className="label-field">
             Email
           </label>
           <input
@@ -68,14 +68,14 @@ export function Login() {
             autoComplete="email"
             value={email}
             onChange={(ev) => setEmail(ev.target.value)}
-            className="mt-2 w-full rounded-lg border border-titl-sand px-4 py-3 text-lg text-titl-bark shadow-inner min-h-[52px]"
+            className="input-field"
             required
             disabled={busy}
           />
         </div>
 
         <div>
-          <label htmlFor="login-password" className="block text-lg font-semibold text-titl-forest">
+          <label htmlFor="login-password" className="label-field">
             Password
           </label>
           <input
@@ -85,26 +85,22 @@ export function Login() {
             autoComplete="current-password"
             value={password}
             onChange={(ev) => setPassword(ev.target.value)}
-            className="mt-2 w-full rounded-lg border border-titl-sand px-4 py-3 text-lg text-titl-bark shadow-inner min-h-[52px]"
+            className="input-field"
             minLength={6}
             required
             disabled={busy}
           />
-          <p className="mt-2 text-base text-titl-bark/80">At least six characters.</p>
+          <p className="mt-2 text-sm text-titl-subtle">At least six characters.</p>
         </div>
 
-        <button
-          type="submit"
-          disabled={busy}
-          className="w-full rounded-xl bg-titl-forest py-4 text-lg font-semibold text-white min-h-[52px] disabled:opacity-60"
-        >
+        <button type="submit" disabled={busy} className="btn-primary w-full">
           {busy ? "Signing in…" : "Log in"}
         </button>
       </form>
 
-      <p className="mt-6 text-center text-lg text-titl-bark">
+      <p className="mt-8 text-center text-titl-muted">
         No account yet?{" "}
-        <Link to="/register" className="font-semibold text-titl-moss underline">
+        <Link to="/register" className="link-accent">
           Register
         </Link>
       </p>

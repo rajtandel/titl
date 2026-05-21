@@ -70,52 +70,52 @@ function ContactCard({
   const tel = row.phone.replace(/\s/g, "");
 
   return (
-    <article className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-6">
+    <article className="card p-5 sm:p-6">
       <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
-        <div className="min-w-0 flex flex-1 flex-col gap-4 sm:flex-row sm:gap-5">
+        <div className="flex min-w-0 flex-1 flex-col gap-4 sm:flex-row sm:gap-5">
           <div
-            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-lg font-bold tracking-tight text-slate-700"
+            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-titl-divider text-base font-semibold tracking-tight text-titl-muted"
             aria-hidden
           >
             {row.initials}
           </div>
           <div className="min-w-0 flex-1 space-y-3">
             <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
-              <h2 className="text-xl font-bold leading-tight text-slate-900 sm:text-2xl">
+              <h2 className="text-xl font-semibold leading-tight text-titl-text sm:text-2xl">
                 {row.businessOrName}
               </h2>
-              <span className="inline-flex w-fit rounded-md border border-slate-200 bg-white px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-slate-600">
+              <span className="inline-flex w-fit rounded-full border border-titl-border bg-titl-bg px-2.5 py-0.5 text-xs font-medium text-titl-muted">
                 {row.category}
               </span>
-              <span className="inline-flex w-fit items-center rounded-full bg-sky-100 px-3 py-1 text-sm font-semibold text-sky-950">
+              <span className="inline-flex w-fit items-center rounded-full bg-titl-divider px-3 py-1 text-sm font-medium text-titl-text">
                 {row.rating.toFixed(2)} ({row.reviewCount} reviews)
               </span>
               {row.badge ? (
-                <span className="inline-flex w-fit items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700">
+                <span className="inline-flex w-fit items-center gap-1 rounded-full border border-titl-border px-2.5 py-1 text-xs text-titl-muted">
                   ★ {row.badge}
                 </span>
               ) : null}
             </div>
 
-            <div className="flex flex-col gap-2 text-sm text-slate-600 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-1">
+            <div className="flex flex-col gap-2 text-sm text-titl-muted sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-1">
               <span className="inline-flex items-center gap-2">
-                <IconMapPin className="shrink-0 text-slate-500" />
+                <IconMapPin className="shrink-0 text-titl-subtle" />
                 <span>
-                  Operates in <span className="font-medium text-slate-800">{row.area}</span>
+                  Operates in <span className="font-medium text-titl-text">{row.area}</span>
                 </span>
               </span>
               <span className="inline-flex items-center gap-2">
-                <IconClock className="shrink-0 text-slate-500" />
-                <span className="font-medium text-slate-800">{row.availability}</span>
+                <IconClock className="shrink-0 text-titl-subtle" />
+                <span className="font-medium text-titl-text">{row.availability}</span>
               </span>
             </div>
 
             <div>
-              <h3 className="text-sm font-bold text-slate-900">Services &amp; skills</h3>
-              <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-slate-700">
+              <h3 className="text-sm font-semibold text-titl-text">Services &amp; skills</h3>
+              <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-titl-muted">
                 {row.services.map((s) => (
                   <li key={s} className="inline-flex items-center gap-1.5">
-                    <span className="font-semibold text-sky-600" aria-hidden>
+                    <span className="text-titl-accent" aria-hidden>
                       ✓
                     </span>
                     {s}
@@ -125,21 +125,21 @@ function ContactCard({
             </div>
 
             {row.suggestedServices && row.suggestedServices.length > 0 ? (
-              <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-4">
-                <h3 className="text-sm font-bold text-slate-900">Suggested services</h3>
-                <ul className="mt-3 divide-y divide-slate-200/80 text-sm">
+              <div className="rounded-xl bg-titl-bg p-4">
+                <h3 className="text-sm font-semibold text-titl-text">Suggested services</h3>
+                <ul className="mt-3 divide-y divide-titl-border text-sm">
                   {row.suggestedServices.map((item) => (
                     <li
                       key={item.label}
                       className="flex items-start justify-between gap-4 py-2 first:pt-0 last:pb-0"
                     >
-                      <span className="inline-flex items-start gap-2 font-medium text-slate-800">
-                        <span className="mt-0.5 font-semibold text-sky-600" aria-hidden>
+                      <span className="inline-flex items-start gap-2 font-medium text-titl-text">
+                        <span className="mt-0.5 text-titl-accent" aria-hidden>
                           ✓
                         </span>
                         {item.label}
                       </span>
-                      <span className="shrink-0 font-semibold text-slate-700">{item.price}</span>
+                      <span className="shrink-0 font-medium text-titl-muted">{item.price}</span>
                     </li>
                   ))}
                 </ul>
@@ -148,21 +148,14 @@ function ContactCard({
           </div>
         </div>
 
-        <div className="flex shrink-0 flex-col gap-2 lg:w-[200px]">
+        <div className="flex shrink-0 flex-col gap-2 lg:w-[220px]">
           {phoneVisible ? (
-            <a
-              href={`tel:${tel}`}
-              className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-3 text-center text-base font-semibold text-white shadow-sm transition hover:bg-red-700"
-            >
+            <a href={`tel:${tel}`} className="btn-primary w-full gap-2">
               <IconPhone className="shrink-0" />
               {row.phone}
             </a>
           ) : (
-            <button
-              type="button"
-              onClick={onShowPhone}
-              className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-red-700"
-            >
+            <button type="button" onClick={onShowPhone} className="btn-primary w-full gap-2">
               <IconPhone className="shrink-0" />
               Show phone number
             </button>
@@ -181,30 +174,26 @@ export function Contacts() {
 
   return (
     <div className="space-y-6">
-      <header className="space-y-3">
-        <h1 className="font-serif text-3xl font-semibold text-titl-forest sm:text-4xl">
-          Local trades &amp; services
-        </h1>
-        <p className="max-w-readable text-lg leading-relaxed text-titl-bark">
+      <header>
+        <h1 className="page-title">Local trades &amp; services.</h1>
+        <p className="page-lead">
           Find electricians, builders, gardeners, and other local contacts in one place. Always
           confirm insurance, references, and pricing before you agree to any work.
         </p>
       </header>
 
-      <div className="rounded-xl bg-slate-900 px-4 py-3.5 text-sm text-white shadow-md sm:px-5 sm:text-base">
-        <p className="leading-snug">
-          <strong className="font-semibold text-white">TiTL does not vet listings.</strong>{" "}
-          Ratings and reviews shown here are for layout only and are not checked by this site.
-        </p>
-      </div>
+      <p className="rounded-xl bg-titl-divider/60 px-4 py-3.5 text-sm leading-relaxed text-titl-muted">
+        <span className="font-medium text-titl-text">TiTL does not vet listings.</span> Ratings
+        and reviews shown here are for layout only and are not checked by this site.
+      </p>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <label className="flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-800">
-          <span>Sort by</span>
+        <label className="flex flex-wrap items-center gap-2 text-sm font-medium text-titl-text">
+          <span className="text-titl-muted">Sort by</span>
           <select
             value={sortKey}
             onChange={(e) => setSortKey(e.target.value as SortKey)}
-            className="min-h-[44px] min-w-[12rem] rounded-lg border border-slate-300 bg-white px-3 py-2 text-base font-medium text-slate-900 shadow-sm"
+            className="input-field !mt-0 min-h-[40px] min-w-[12rem] !py-2 text-sm"
           >
             <option value="relevant">Most relevant</option>
             <option value="rating">Highest rated</option>
@@ -212,7 +201,7 @@ export function Contacts() {
             <option value="category">Category</option>
           </select>
         </label>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-titl-subtle">
           {sorted.length} {sorted.length === 1 ? "listing" : "listings"}
         </p>
       </div>
