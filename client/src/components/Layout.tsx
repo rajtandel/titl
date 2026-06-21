@@ -127,17 +127,17 @@ const navItems: NavItem[] = [
 
 function sidebarLinkClass({ isActive }: { isActive: boolean }) {
   return [
-    "flex min-h-[44px] items-center gap-3 rounded-lg px-3 py-2 text-[15px] transition-colors",
+    "relative flex min-h-[44px] items-center gap-3 rounded-xl px-3 py-2.5 text-[15px] transition-all duration-200",
     isActive
-      ? "bg-titl-divider font-medium text-titl-text"
-      : "text-titl-muted hover:bg-titl-divider/60 hover:text-titl-text",
+      ? "bg-titl-accent/10 font-semibold text-titl-accent"
+      : "text-titl-muted hover:bg-titl-divider/80 hover:text-titl-text",
   ].join(" ");
 }
 
 function bottomNavLinkClass({ isActive }: { isActive: boolean }) {
   return [
-    "flex min-h-[52px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 px-1 py-1 text-[10px] font-medium tracking-tight transition-colors",
-    isActive ? "text-titl-text" : "text-titl-subtle",
+    "flex min-h-[52px] min-w-0 flex-1 flex-col items-center justify-center gap-0.5 px-1 py-1 text-[10px] font-semibold tracking-tight transition-all duration-200",
+    isActive ? "text-titl-accent" : "text-titl-subtle",
   ].join(" ");
 }
 
@@ -149,7 +149,7 @@ export function Layout({ children }: { children: ReactNode }) {
   ) : user ? (
     <div className="flex items-center gap-3">
       <span
-        className="hidden min-w-0 max-w-[10rem] truncate text-sm text-titl-muted sm:inline lg:max-w-[14rem]"
+        className="hidden min-w-0 max-w-[10rem] truncate rounded-full bg-titl-divider/60 px-3 py-1 text-sm font-medium text-titl-muted sm:inline lg:max-w-[14rem]"
         title={user.name}
       >
         {user.name}
@@ -159,17 +159,20 @@ export function Layout({ children }: { children: ReactNode }) {
         onClick={() => {
           void logout();
         }}
-        className="text-sm font-medium text-titl-accent hover:underline"
+        className="text-sm font-semibold text-titl-accent transition-colors hover:text-titl-accent-hover"
       >
         Log out
       </button>
     </div>
   ) : (
-    <div className="flex items-center gap-4">
-      <Link to="/login" className="text-sm font-medium text-titl-muted hover:text-titl-text">
+    <div className="flex items-center gap-3 sm:gap-4">
+      <Link
+        to="/login"
+        className="text-sm font-semibold text-titl-muted transition-colors hover:text-titl-text"
+      >
         Log in
       </Link>
-      <Link to="/register" className="btn-primary !min-h-[36px] !px-4 !text-sm">
+      <Link to="/register" className="btn-primary !min-h-[38px] !px-5 !text-sm !shadow-none">
         Register
       </Link>
     </div>
@@ -179,21 +182,26 @@ export function Layout({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen flex-col bg-titl-bg pb-[5.5rem] lg:pb-0">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-titl-surface focus:px-4 focus:py-3 focus:text-titl-text focus:shadow-card"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:bg-titl-surface focus:px-4 focus:py-3 focus:text-titl-text focus:shadow-card"
       >
         Skip to main content
       </a>
 
-      <header className="sticky top-0 z-40 border-b border-titl-border/60 bg-titl-surface/80 backdrop-blur-xl backdrop-saturate-150">
-        <div className="mx-auto flex h-12 max-w-[1600px] items-center justify-between gap-4 px-4 lg:h-14 lg:px-8">
+      <header className="sticky top-0 z-40 animate-slide-down border-b border-titl-border/50 bg-titl-surface/85 backdrop-blur-xl backdrop-saturate-150">
+        <div className="mx-auto flex h-14 max-w-[1600px] items-center justify-between gap-4 px-4 lg:h-16 lg:px-8">
           <Link
             to="/"
-            className="text-[21px] font-semibold tracking-tight text-titl-text transition-opacity hover:opacity-80"
+            className="group flex items-center gap-2.5 transition-opacity hover:opacity-90"
           >
-            TiTL
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-titl-accent text-sm font-bold text-titl-on-accent shadow-glow transition-transform duration-300 group-hover:scale-105">
+              T
+            </span>
+            <span className="font-display text-xl font-semibold tracking-tight text-titl-text">
+              TiTL
+            </span>
           </Link>
 
-          <p className="hidden flex-1 text-center text-xs text-titl-subtle lg:block">
+          <p className="hidden flex-1 text-center text-xs font-medium tracking-wide text-titl-subtle lg:block">
             Thorpebury in the Limes
           </p>
 
@@ -206,14 +214,19 @@ export function Layout({ children }: { children: ReactNode }) {
 
       <div className="mx-auto flex w-full max-w-[1600px] flex-1">
         <aside
-          className="sticky top-12 hidden h-[calc(100vh-3rem)] w-[220px] shrink-0 flex-col lg:top-14 lg:flex lg:h-[calc(100vh-3.5rem)] lg:w-[240px]"
+          className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-[220px] shrink-0 flex-col lg:top-16 lg:flex lg:h-[calc(100vh-4rem)] lg:w-[240px]"
           aria-label="Main navigation"
         >
-          <nav className="flex flex-col gap-0.5 px-4 py-8">
+          <nav className="flex flex-col gap-1 px-4 py-8">
             {navItems.map(({ to, end, label, Icon }) => (
               <NavLink key={to} to={to} end={end} className={sidebarLinkClass}>
-                <Icon className="shrink-0 opacity-80" />
-                {label}
+                {({ isActive }: { isActive: boolean }) => (
+                  <>
+                    {isActive ? <span className="nav-active-indicator" aria-hidden /> : null}
+                    <Icon className={["shrink-0 transition-colors", isActive ? "text-titl-accent" : "opacity-70"].join(" ")} />
+                    {label}
+                  </>
+                )}
               </NavLink>
             ))}
           </nav>
@@ -229,13 +242,13 @@ export function Layout({ children }: { children: ReactNode }) {
             </main>
 
             <aside
-              className="sticky top-12 hidden h-[calc(100vh-3rem)] w-[240px] shrink-0 px-6 py-12 lg:top-14 lg:h-[calc(100vh-3.5rem)] xl:block"
+              className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-[240px] shrink-0 px-6 py-12 lg:top-16 lg:h-[calc(100vh-4rem)] xl:block"
               aria-label="Quick links"
             >
-              <div className="space-y-8 text-sm">
+              <div className="space-y-8 rounded-2xl border border-titl-border/50 bg-titl-surface/60 p-5 text-sm shadow-card backdrop-blur-sm">
                 <div>
-                  <p className="font-semibold text-titl-text">Explore</p>
-                  <ul className="mt-3 space-y-2 text-titl-muted">
+                  <p className="font-display text-base font-semibold text-titl-text">Explore</p>
+                  <ul className="mt-3 space-y-2.5 text-titl-muted">
                     <li>
                       <Link to="/contacts" className="link-accent">
                         Local trades
@@ -261,12 +274,12 @@ export function Layout({ children }: { children: ReactNode }) {
             </aside>
           </div>
 
-          <footer className="border-t border-titl-border/60 bg-titl-bg py-10 text-center text-xs text-titl-subtle">
+          <footer className="border-t border-titl-border/50 bg-titl-surface/40 py-12 text-center text-xs text-titl-subtle backdrop-blur-sm">
             <p className="mx-auto max-w-readable px-4 leading-relaxed">
               Unofficial community site for neighbours. Always verify trader insurance and
               references.
             </p>
-            <p className="mt-4">
+            <p className="mt-4 font-medium">
               Copyright © {new Date().getFullYear()} TiTL — Thorpebury in the Limes
             </p>
           </footer>
@@ -277,13 +290,20 @@ export function Layout({ children }: { children: ReactNode }) {
         className="pointer-events-none fixed bottom-0 left-0 right-0 z-50 lg:hidden"
         aria-label="Bottom navigation"
       >
-        <div className="pointer-events-auto border-t border-titl-border/80 bg-titl-surface/90 px-2 pt-1 shadow-nav backdrop-blur-xl pb-[max(0.25rem,env(safe-area-inset-bottom))]">
+        <div className="pointer-events-auto border-t border-titl-border/60 bg-titl-surface/92 px-2 pt-1.5 shadow-nav backdrop-blur-xl pb-[max(0.25rem,env(safe-area-inset-bottom))]">
           <div className="mx-auto flex max-w-lg items-stretch justify-between">
             {navItems.map(({ to, end, label, bottomLabel, Icon }) => (
               <NavLink key={to} to={to} end={end} className={bottomNavLinkClass}>
                 {({ isActive }: { isActive: boolean }) => (
                   <>
-                    <Icon className={isActive ? "text-titl-text" : "text-titl-subtle"} />
+                    <span
+                      className={[
+                        "flex h-7 w-7 items-center justify-center rounded-xl transition-all duration-200",
+                        isActive ? "bg-titl-accent/15 text-titl-accent" : "text-titl-subtle",
+                      ].join(" ")}
+                    >
+                      <Icon className="h-[18px] w-[18px]" />
+                    </span>
                     <span className="max-w-full truncate">{bottomLabel ?? label}</span>
                   </>
                 )}
@@ -299,14 +319,23 @@ export function Layout({ children }: { children: ReactNode }) {
                   {ready && user ? (
                     <span
                       className={[
-                        "flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-semibold",
-                        isActive ? "bg-titl-text text-titl-bg" : "bg-titl-divider text-titl-muted",
+                        "flex h-7 w-7 items-center justify-center rounded-xl text-[11px] font-bold transition-all duration-200",
+                        isActive
+                          ? "bg-titl-accent text-titl-on-accent"
+                          : "bg-titl-divider text-titl-muted",
                       ].join(" ")}
                     >
                       {user.name.trim().charAt(0).toUpperCase() || "?"}
                     </span>
                   ) : (
-                    <IconUser className={isActive ? "text-titl-text" : "text-titl-subtle"} />
+                    <span
+                      className={[
+                        "flex h-7 w-7 items-center justify-center rounded-xl transition-all duration-200",
+                        isActive ? "bg-titl-accent/15 text-titl-accent" : "text-titl-subtle",
+                      ].join(" ")}
+                    >
+                      <IconUser className="h-[18px] w-[18px]" />
+                    </span>
                   )}
                   <span className="max-w-full truncate">{ready && user ? "You" : "Sign in"}</span>
                 </>
