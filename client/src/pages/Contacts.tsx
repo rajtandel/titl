@@ -1,8 +1,69 @@
 import { useMemo, useState } from "react";
 import { AnimateIn } from "../components/AnimateIn";
+import { SelectMenu } from "../components/SelectMenu";
 import { communityContacts, type CommunityContact } from "../data/contacts";
 
 type SortKey = "relevant" | "name" | "category" | "rating";
+
+const sortOptions = [
+  {
+    value: "relevant" as const,
+    label: "Most relevant",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path
+          d="M3 6h18M7 12h10M10 18h4"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    value: "rating" as const,
+    label: "Highest rated",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path
+          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    value: "name" as const,
+    label: "Name A–Z",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path
+          d="M4 6h12M4 12h8M4 18h16"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+        <path d="M17 4v16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    value: "category" as const,
+    label: "Category",
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <path
+          d="M4 7h7V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3h1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1z"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+];
 
 function sortContacts(list: CommunityContact[], sortKey: SortKey): CommunityContact[] {
   const copy = [...list];
@@ -200,28 +261,24 @@ export function Contacts() {
         </p>
       </AnimateIn>
 
-      <AnimateIn delay={120}>
+      <AnimateIn delay={120} className="relative z-20">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <label className="flex flex-wrap items-center gap-2 text-sm font-medium text-titl-text">
-          <span className="text-titl-muted">Sort by</span>
-          <select
-            value={sortKey}
-            onChange={(e) => setSortKey(e.target.value as SortKey)}
-            className="input-field !mt-0 min-h-[40px] min-w-[12rem] !py-2 text-sm"
-          >
-            <option value="relevant">Most relevant</option>
-            <option value="rating">Highest rated</option>
-            <option value="name">Name (A–Z)</option>
-            <option value="category">Category</option>
-          </select>
-        </label>
-        <p className="text-sm text-titl-subtle">
+          <div className="flex flex-wrap items-center gap-2.5 text-sm font-medium">
+            <span className="text-titl-muted">Sort by</span>
+            <SelectMenu
+              label="Sort contacts by"
+              value={sortKey}
+              onChange={setSortKey}
+              options={sortOptions}
+            />
+          </div>
+          <p className="text-sm text-titl-subtle">
           {sorted.length} {sorted.length === 1 ? "listing" : "listings"}
         </p>
         </div>
       </AnimateIn>
 
-      <ul className="space-y-4">
+      <ul className="relative z-0 space-y-4">
         {sorted.map((row, i) => (
           <AnimateIn key={row.id} as="li" delay={i * 60}>
             <ContactCard
